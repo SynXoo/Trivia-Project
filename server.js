@@ -1,3 +1,6 @@
+/**
+ * Old implmentation replaced with server-with-auth.js which has authentication and authorization
+ */
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');

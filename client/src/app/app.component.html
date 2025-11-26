@@ -1,5 +1,6 @@
-<div class="container">
-  <h1>Trivia Game</h1>
+<div class="container" style="text-align: center; margin-top: 50px;">
+  <h1>Trivia Game Time!</h1>
+  <p>Test your knowledge with this simple trivia game</p>
 
   <!-- Error message -->
   <div *ngIf="errorMessage" class="error">
@@ -26,7 +27,12 @@
   <div *ngIf="gameState === 'waiting'" class="screen">
     <h2>Room: {{ roomId }}</h2>
     <p>You are Player {{ playerNumber }}</p>
-    <p *ngIf="playerCount < 2">Waiting for another player to join...</p>
+
+    <div *ngIf="playerCount < 2">
+      <div class="spinner"></div>
+      <p>Waiting for another player to join...</p>
+    </div>
+
     <p *ngIf="playerCount === 2">Both players connected! Game starting...</p>
   </div>
 
