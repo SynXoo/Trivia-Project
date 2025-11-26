@@ -1,0 +1,95 @@
+<div class="container">
+  <h1>Trivia Game</h1>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Home Screen -->
+  <div *ngIf="gameState === 'home'" class="screen">
+    <h2>Welcome!</h2>
+    <button (click)="createRoom()" class="btn btn-primary">Create Room</button>
+    
+    <div class="join-section">
+      <input 
+        type="text" 
+        [(ngModel)]="roomIdInput" 
+        placeholder="Enter Room Code"
+        class="input"
+      />
+      <button (click)="joinRoom()" class="btn btn-secondary">Join Room</button>
+    </div>
+  </div>
+
+  <!-- Waiting Room -->
+  <div *ngIf="gameState === 'waiting'" class="screen">
+    <h2>Room: {{ roomId }}</h2>
+    <p>You are Player {{ playerNumber }}</p>
+    <p *ngIf="playerCount < 2">Waiting for another player to join...</p>
+    <p *ngIf="playerCount === 2">Both players connected! Game starting...</p>
+  </div>
+
+  <!-- Playing -->
+  <div *ngIf="gameState === 'playing'" class="screen">
+    <div class="question-header">
+      <h3>Question {{ questionNumber }} of {{ totalQuestions }}</h3>
+      <p class="room-code">Room: {{ roomId }}</p>
+    </div>
+
+    <div class="question">
+      <h2>{{ currentQuestion?.question }}</h2>
+    </div>
+
+    <div class="options">
+      <div 
+        *ngFor="let option of currentQuestion?.options; let i = index"
+        class="option"
+        [class.selected]="selectedAnswer === i"
+        [class.correct]="answerResult && answerResult.correctAnswer === i"
+        [class.incorrect]="answerResult && selectedAnswer === i && !answerResult.correct"
+        [class.disabled]="answered"
+        (click)="selectAnswer(i)"
+      >
+        {{ option }}
+      </div>
+    </div>
+
+    <button 
+      *ngIf="!answered"
+      (click)="submitAnswer()" 
+      [disabled]="selectedAnswer === null"
+      class="btn btn-primary"
+    >
+      Submit Answer
+    </button>
+
+    <div *ngIf="answered" class="result">
+      <p *ngIf="answerResult?.correct" class="correct-text">✓ Correct!</p>
+      <p *ngIf="!answerResult?.correct" class="incorrect-text">✗ Incorrect</p>
+      <p>Waiting for next question...</p>
+    </div>
+  </div>
+
+  <!-- Game Over -->
+  <div *ngIf="gameState === 'finished'" class="screen">
+    <h2>Game Over!</h2>
+    <div class="scores">
+      <h3>Final Scores:</h3>
+      <p>Your score: {{ getMyScore() }} / {{ totalQuestions }}</p>
+      <p>Opponent score: {{ getOpponentScore() }} / {{ totalQuestions }}</p>
+      
+      <div *ngIf="getMyScore() > getOpponentScore()" class="winner">
+        🎉 You Won! 🎉
+      </div>
+      <div *ngIf="getMyScore() < getOpponentScore()" class="loser">
+        Better luck next time!
+      </div>
+      <div *ngIf="getMyScore() === getOpponentScore()" class="tie">
+        It's a tie!
+      </div>
+    </div>
+    
+    <button (click)="resetGame()" class="btn btn-primary">Play Again</button>
+  </div>
+</div>
