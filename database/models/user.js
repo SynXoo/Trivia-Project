@@ -9,7 +9,7 @@
  */
 
 const { DataTypes, Op } = require('sequelize');
-const { bcrypt } = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { sequelize } = require('./config');
 
  const User = sequelize.define('User', {
@@ -114,7 +114,6 @@ const { sequelize } = require('./config');
 });
 /**
  * Instance methods for user operations
- * 
  */
 
 /**

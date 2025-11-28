@@ -1,8 +1,11 @@
 # Development TODO
 
 ## High Priority
-- [ ] Implement JWT authentication utilities
+- [x] Implement JWT authentication utilities ✓ (Nov 27)
 - [ ] Create authentication routes (login, register, logout)
+  - [x] Register endpoint ✓
+  - [x] Login endpoint ✓  
+  - [ ] /me, /profile, /leaderboard - TODO
 - [ ] Complete server-with-auth.js implementation
 - [ ] Create AuthService for Angular
 - [ ] Update SocketService to include JWT authentication
