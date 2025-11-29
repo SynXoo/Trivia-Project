@@ -10,7 +10,7 @@
 
 const { DataTypes, Op } = require('sequelize');
 const bcrypt = require('bcrypt');
-const { sequelize } = require('./config');
+const { sequelize } = require('../config');
 
  const User = sequelize.define('User', {
     username: {

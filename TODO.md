@@ -2,11 +2,11 @@
 
 ## High Priority
 - [x] Implement JWT authentication utilities ✓ (Nov 27)
-- [ ] Create authentication routes (login, register, logout)
+- [x] Create authentication routes (login, register, logout)
   - [x] Register endpoint ✓
   - [x] Login endpoint ✓  
-  - [ ] /me, /profile, /leaderboard - TODO
-- [ ] Complete server-with-auth.js implementation
+  - [x] /me, /profile, /leaderboard - TODO
+- [x] Complete server-with-auth.js implementation
 - [ ] Create AuthService for Angular
 - [ ] Update SocketService to include JWT authentication
 - [ ] Integrate user authentication with game rooms
