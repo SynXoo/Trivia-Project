@@ -1,101 +1,127 @@
-<div class="container" style="text-align: center; margin-top: 50px;">
-  <h1>Trivia Game Time!</h1>
-  <p>Test your knowledge with this simple trivia game</p>
+<!-- 
+  CHANGED:
+  - Added a simple navigation bar at the top
+  - Added <router-outlet> at the bottom
+  
+  The router-outlet doesn't show anything yet because we haven't
+  created any routed components.
+-->
 
-  <!-- Error message -->
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
-
-  <!-- Home Screen -->
-  <div *ngIf="gameState === 'home'" class="screen">
-    <h2>Welcome!</h2>
-    <button (click)="createRoom()" class="btn btn-primary">Create Room</button>
-    
-    <div class="join-section">
-      <input 
-        type="text" 
-        [(ngModel)]="roomIdInput" 
-        placeholder="Enter Room Code"
-        class="input"
-      />
-      <button (click)="joinRoom()" class="btn btn-secondary">Join Room</button>
+<!-- Navigation Bar -->
+<nav style="background: #1a1a2e; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-size: 24px; font-weight: bold; color: #9034db;">
+      🎮 Trivia Game
     </div>
-  </div>
-
-  <!-- Waiting Room -->
-  <div *ngIf="gameState === 'waiting'" class="screen">
-    <h2>Room: {{ roomId }}</h2>
-    <p>You are Player {{ playerNumber }}</p>
-
-    <div *ngIf="playerCount < 2">
-      <div class="spinner"></div>
-      <p>Waiting for another player to join...</p>
+    <div>
+      <!-- TODO: Add routes later -->
+      <a routerLink="/" style="color: #fff; margin-right: 20px; text-decoration: none;">Home</a>
+      <a routerLink="/login" style="color: #fff; margin-right: 20px; text-decoration: none;">Login</a>
+      <a routerLink="/game" style="color: #fff; text-decoration: none;">Play</a>
     </div>
-
-    <p *ngIf="playerCount === 2">Both players connected! Game starting...</p>
-  </div>
-
-  <!-- Playing -->
-  <div *ngIf="gameState === 'playing'" class="screen">
-    <div class="question-header">
-      <h3>Question {{ questionNumber }} of {{ totalQuestions }}</h3>
-      <p class="room-code">Room: {{ roomId }}</p>
+  </nav>
+  
+  <!-- EXISTING GAME UI  -->
+  <div class="container" style="text-align: center; margin-top: 50px;">
+    <h1>Trivia Game Time!</h1>
+    <p>Test your knowledge with this simple trivia game</p>
+  
+    <!-- Error message -->
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
     </div>
-
-    <div class="question">
-      <h2>{{ currentQuestion?.question }}</h2>
-    </div>
-
-    <div class="options">
-      <div 
-        *ngFor="let option of currentQuestion?.options; let i = index"
-        class="option"
-        [class.selected]="selectedAnswer === i"
-        [class.correct]="answerResult && answerResult.correctAnswer === i"
-        [class.incorrect]="answerResult && selectedAnswer === i && !answerResult.correct"
-        [class.disabled]="answered"
-        (click)="selectAnswer(i)"
-      >
-        {{ option }}
-      </div>
-    </div>
-
-    <button 
-      *ngIf="!answered"
-      (click)="submitAnswer()" 
-      [disabled]="selectedAnswer === null"
-      class="btn btn-primary"
-    >
-      Submit Answer
-    </button>
-
-    <div *ngIf="answered" class="result">
-      <p *ngIf="answerResult?.correct" class="correct-text">✓ Correct!</p>
-      <p *ngIf="!answerResult?.correct" class="incorrect-text">✗ Incorrect</p>
-      <p>Waiting for next question...</p>
-    </div>
-  </div>
-
-  <!-- Game Over -->
-  <div *ngIf="gameState === 'finished'" class="screen">
-    <h2>Game Over!</h2>
-    <div class="scores">
-      <h3>Final Scores:</h3>
-      <p>Your score: {{ getMyScore() }} / {{ totalQuestions }}</p>
-      <p>Opponent score: {{ getOpponentScore() }} / {{ totalQuestions }}</p>
+  
+    <!-- Home Screen -->
+    <div *ngIf="gameState === 'home'" class="screen">
+      <h2>Welcome!</h2>
+      <button (click)="createRoom()" class="btn btn-primary">Create Room</button>
       
-      <div *ngIf="getMyScore() > getOpponentScore()" class="winner">
-        🎉 You Won! 🎉
-      </div>
-      <div *ngIf="getMyScore() < getOpponentScore()" class="loser">
-        Better luck next time!
-      </div>
-      <div *ngIf="getMyScore() === getOpponentScore()" class="tie">
-        It's a tie!
+      <div class="join-section">
+        <input 
+          type="text" 
+          [(ngModel)]="roomIdInput" 
+          placeholder="Enter Room Code"
+          class="input"
+        />
+        <button (click)="joinRoom()" class="btn btn-secondary">Join Room</button>
       </div>
     </div>
-    
-    <button (click)="resetGame()" class="btn btn-primary">Play Again</button>
+  
+    <!-- Waiting Room -->
+    <div *ngIf="gameState === 'waiting'" class="screen">
+      <h2>Room: {{ roomId }}</h2>
+      <p>You are Player {{ playerNumber }}</p>
+  
+      <div *ngIf="playerCount < 2">
+        <div class="spinner"></div>
+        <p>Waiting for another player to join...</p>
+      </div>
+  
+      <p *ngIf="playerCount === 2">Both players connected! Game starting...</p>
+    </div>
+  
+    <!-- Playing -->
+    <div *ngIf="gameState === 'playing'" class="screen">
+      <div class="question-header">
+        <h3>Question {{ questionNumber }} of {{ totalQuestions }}</h3>
+        <p class="room-code">Room: {{ roomId }}</p>
+      </div>
+  
+      <div class="question">
+        <h2>{{ currentQuestion?.question }}</h2>
+      </div>
+  
+      <div class="options">
+        <div 
+          *ngFor="let option of currentQuestion?.options; let i = index"
+          class="option"
+          [class.selected]="selectedAnswer === i"
+          [class.correct]="answerResult && answerResult.correctAnswer === i"
+          [class.incorrect]="answerResult && selectedAnswer === i && !answerResult.correct"
+          [class.disabled]="answered"
+          (click)="selectAnswer(i)"
+        >
+          {{ option }}
+        </div>
+      </div>
+  
+      <button 
+        *ngIf="!answered"
+        (click)="submitAnswer()" 
+        [disabled]="selectedAnswer === null"
+        class="btn btn-primary"
+      >
+        Submit Answer
+      </button>
+  
+      <div *ngIf="answered" class="result">
+        <p *ngIf="answerResult?.correct" class="correct-text">✓ Correct!</p>
+        <p *ngIf="!answerResult?.correct" class="incorrect-text">✗ Incorrect</p>
+        <p>Waiting for next question...</p>
+      </div>
+    </div>
+  
+    <!-- Game Over -->
+    <div *ngIf="gameState === 'finished'" class="screen">
+      <h2>Game Over!</h2>
+      <div class="scores">
+        <h3>Final Scores:</h3>
+        <p>Your score: {{ getMyScore() }} / {{ totalQuestions }}</p>
+        <p>Opponent score: {{ getOpponentScore() }} / {{ totalQuestions }}</p>
+        
+        <div *ngIf="getMyScore() > getOpponentScore()" class="winner">
+          🎉 You Won! 🎉
+        </div>
+        <div *ngIf="getMyScore() < getOpponentScore()" class="loser">
+          Better luck next time!
+        </div>
+        <div *ngIf="getMyScore() === getOpponentScore()" class="tie">
+          It's a tie!
+        </div>
+      </div>
+      
+      <button (click)="resetGame()" class="btn btn-primary">Play Again</button>
+    </div>
   </div>
-</div>
+  
+  <!-- Router Outlet -->
+  <router-outlet></router-outlet>

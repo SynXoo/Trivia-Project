@@ -1,21 +1,37 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { SocketService } from './services/socket.service';
 import { Subscription } from 'rxjs';
 
+/**
+ * Root Application Component
+ * 
+ * CHANGED:
+ * - Added RouterOutlet and RouterLink imports
+ * - Added <router-outlet> to the template (see app.component.html)
+ * 
+ * 
+ * The router-outlet is where other components will appear
+ * when we navigate to different URLs.
+ */
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterOutlet, RouterLink],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  // Game states, these are the only states the game can be in
+  // ========================================
+  // Stays the same as before
+  // ========================================
+  
+  // Game states
   gameState: 'home' | 'waiting' | 'playing' | 'finished' = 'home';
   
-  // Store the game data, these are the only data that needs to be stored for the game
+  // Room data
   roomId: string = '';
   roomIdInput: string = '';
   playerNumber: number = 0;
@@ -174,8 +190,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private getMySocketId(): string {
-    // We'd need to expose socket.id from the service for this
-    // For now, we'll use player number
     return this.finalScores[this.playerNumber - 1]?.playerId || '';
   }
 }
