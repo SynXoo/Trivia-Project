@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './components/auth/login.component';
 
 /**
  * Application Routes
@@ -9,4 +10,5 @@ import { Routes } from '@angular/router';
  * 404 and other error routes will be added later
  */
 export const appRoutes: Routes = [
+    {path: 'login', component: LoginComponent},
 ];
