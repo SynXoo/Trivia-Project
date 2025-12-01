@@ -22,18 +22,43 @@
   - [x] Player info attached to socket connections
   - [x] Game statistics updated after each game
 
+### Frontend Authentication (Nov 30 - Dec 1)
+- [x] Create AuthService for Angular (`services/auth.service.ts`)
+  - [x] Login/register methods
+  - [x] JWT token storage (localStorage)
+  - [x] Auth state management (Angular signals)
+  - [x] Session restoration on app load
+  - [x] Profile update method
+  - [x] Logout functionality
+  - [x] Fake data mode for testing (toggle: `USE_FAKE_DATA`)
+- [x] Create TypeScript models (`shared/models/index.ts`)
+  - [x] User, LoginUser, RegisterData, AuthResponse interfaces
+  - [x] Game models: Question, Player, Room, FinalScore
+  - [x] LeaderboardEntry, GameState types
+- [x] Create login component (`components/auth/login.component.ts`)
+  - [x] Form with validation
+  - [x] Error handling and display
+  - [x] Loading state
+  - [x] Password show/hide toggle
+  - [x] Dark themed UI
+- [x] Set up basic routing (`app.routes.ts`)
+
 ## High Priority - Frontend Integration 🚧
 
-- [ ] Create AuthService for Angular
-  - [ ] Login/register methods
-  - [ ] JWT token storage
-  - [ ] Auth state management
+- [ ] Create register component
+  - [ ] Registration form with validation
+  - [ ] Display name and color selection
 - [ ] Update SocketService to include JWT authentication
-  - [ ] Pass token in socket handshake
+  - [ ] Inject AuthService to get token
+  - [ ] Pass token in socket handshake `auth: { token }`
+  - [ ] Handle `authenticated` event from server
   - [ ] Handle authentication errors
-- [ ] Create login/register components
 - [ ] Add auth guards for protected routes
+  - [ ] Redirect unauthenticated users to login
 - [ ] Display user info and stats in UI
+  - [ ] Show username/display name in navbar
+  - [ ] Display user stats on home/profile page
+- [ ] Connect AuthService to real backend (set `USE_FAKE_DATA = false`)
 
 ## Medium Priority
 

@@ -4,7 +4,7 @@ A real-time multiplayer trivia game built with Angular, Node.js, Socket.IO, and 
 
 ## Current Status
 
-🚧 **Work in Progress** - Backend authentication is complete, frontend integration pending.
+🚧 **Work in Progress** - Backend authentication complete, frontend authentication in progress.
 
 > ⚠️ **Note:** `scripts/start.sh` does not currently work because the frontend is not fully set up yet. For now, run only the backend server with `node server-with-auth.js`.
 
@@ -37,26 +37,36 @@ A real-time multiplayer trivia game built with Angular, Node.js, Socket.IO, and 
 
 ## Project Structure
 ```
-├── client/                 # Angular frontend (in progress)
+├── client/                     # Angular frontend
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── components/
-│   │   │   └── services/
+│   │   │   │   └── auth/
+│   │   │   │       └── login.component.ts    # Login page ✅
+│   │   │   ├── services/
+│   │   │   │   ├── auth.service.ts           # Auth service ✅
+│   │   │   │   └── socket.service.ts         # Socket.IO client
+│   │   │   ├── shared/
+│   │   │   │   └── models/
+│   │   │   │       └── index.ts              # TypeScript interfaces ✅
+│   │   │   ├── app.routes.ts                 # Routing config ✅
+│   │   │   └── app.component.ts
+│   │   └── environments/
 │   └── ...
-├── server.js              # Main server (basic version, no auth)
-├── server-with-auth.js    # Server with full authentication ✅
+├── server.js                   # Main server (basic version, no auth)
+├── server-with-auth.js         # Server with full authentication ✅
 ├── auth/
-│   └── jwt.js             # JWT utilities ✅
-├── database/              # Database models and config
+│   └── jwt.js                  # JWT utilities ✅
+├── database/                   # Database models and config
 │   ├── models/
-│   │   └── user.js        # User model with stats ✅
-│   └── config.js          # Sequelize configuration ✅
+│   │   └── user.js             # User model with stats ✅
+│   └── config.js               # Sequelize configuration ✅
 ├── routes/
 │   └── auth/
-│       └── auth.js        # Authentication routes ✅
+│       └── auth.js             # Authentication routes ✅
 ├── scripts/
-│   ├── setup.sh           # Project setup script
-│   └── start.sh           # Start script (frontend not ready)
+│   ├── setup.sh                # Project setup script
+│   └── start.sh                # Start script (frontend not ready)
 └── package.json
 ```
 
@@ -93,6 +103,15 @@ PORT=3000
 node server-with-auth.js
 ```
 The server will run on `http://localhost:3000`
+
+**Frontend Only (Testing with Fake Data):**
+```bash
+cd client
+ng serve
+```
+The Angular app will run on `http://localhost:4200`. Login with any username and password `test`.
+
+> **Note:** The frontend currently uses fake data mode (`USE_FAKE_DATA = true` in `auth.service.ts`). Set this to `false` to connect to the real backend API.
 
 **Full Application (Once Frontend is Ready):**
 ```bash
@@ -135,18 +154,23 @@ The server will run on `http://localhost:3000`
 See [TODO.md](./TODO.md) for current development tasks and future features.
 
 ### Completed ✅
-- JWT authentication system
-- User registration and login
+- JWT authentication system (backend)
+- User registration and login (backend)
 - Socket.IO authentication middleware
 - User statistics tracking
 - Game results saved to database
+- AuthService for Angular (with fake data mode for testing)
+- Login component with form validation
+- TypeScript models for users, games, and leaderboards
 
 ### In Progress 🚧
-- Angular frontend integration
-- AuthService for Angular
+- Register component
 - SocketService JWT integration
+- Auth guards for protected routes
+- User info display in UI
 
 ### Planned 📋
+- Connect frontend to real backend API
 - Enhanced UI/themes
 - External trivia API integration
 - More game modes
